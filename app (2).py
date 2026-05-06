@@ -64,11 +64,11 @@ st.markdown("""
 @st.cache_resource
 def load_spacy():
     import spacy
+    import subprocess, sys
     try:
         return spacy.load("en_core_web_sm")
-    except:
-        os.system("python -m spacy download en_core_web_sm")
-        import spacy
+    except OSError:
+        subprocess.run([sys.executable, "-m", "spacy", "download", "en_core_web_sm"], check=True)
         return spacy.load("en_core_web_sm")
 
 @st.cache_resource
